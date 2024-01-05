@@ -9,7 +9,7 @@ export default function PrimaryHeader() {
     <header className="border-b-[1px] py-3">
       <div className="container mx-auto">
         <div className="flex justify-between">
-          <h2>PrimaryHeader</h2>
+          <h2>Therajamancha</h2>
           <div>
             <Switch
               onCheckedChange={(value) => setTheme(value ? "dark" : "light")}
