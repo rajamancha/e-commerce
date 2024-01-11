@@ -7,13 +7,19 @@ import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../ui/select";
 
 const formSchema = z.object({
   name: z.string().min(2).max(50),
@@ -22,12 +28,14 @@ const formSchema = z.object({
   currency: z.string(),
 });
 
+const currencyArray = ["USD", "EUR", "GBP", "INR"];
+
 export default function ProductForm() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: "",
-      currency: "USD",
+      currency: "",
       description: "",
       price: "",
     },
@@ -92,9 +100,23 @@ export default function ProductForm() {
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Currency: </FormLabel>
-                <FormControl>
-                  <Input placeholder="Product currency" {...field} />
-                </FormControl>
+                <Select
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                >
+                  <FormControl>
+                    <SelectTrigger className="w-[180px]">
+                      <SelectValue placeholder="Select Currency" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    {currencyArray.map((currency) => (
+                      <SelectItem key={currency} value={currency}>
+                        {currency}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
                 <FormMessage />
               </FormItem>
             )}
